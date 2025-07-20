@@ -82,8 +82,8 @@ async function getPreferredCameraStream() {
 
   const constraints = {
     video: preferredDevice
-      ? { deviceId: { exact: preferredDevice.deviceId }, width: 1280, height: 960 }
-      : { width: 1280, height: 960 },
+      ? { deviceId: { exact: preferredDevice.deviceId }, width: 960, height: 1280 }
+      : { width: 960, height: 1280 },
     audio: false
   };
 
