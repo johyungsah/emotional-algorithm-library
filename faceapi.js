@@ -177,9 +177,9 @@ async function init() {
         ctx.font = "600 1rem 'Pretendard', sans-serif";
         ctx.textAlign = "left";
         ctx.textBaseline = "top";
-        const padding = 3;
+        const padding = 5;
         const textX = mirroredBoxX + 4;
-        const textY = box.y - 50;
+        const textY = box.y - 60;
         const textWidth = ctx.measureText(label).width;
         const textHeight = 50;
 
