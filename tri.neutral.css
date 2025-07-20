@@ -213,6 +213,7 @@ body {
   border: 2px solid #AAAEAA;
   border-radius: 999px;
   overflow: hidden;
+  z-index: 100;
 }
 
 .progress-bar {
@@ -221,6 +222,7 @@ body {
   background-color: #AAAEAA;
   border-radius: 999px;
   transition: width 5s ease-in-out;
+  z-index: 100;
 }
 
 .logo-img {
@@ -268,7 +270,7 @@ body {
 }
 
 .info-block {
-  margin-top: 3vh;
+  margin-top: 2vh;
   display: flex;
   flex-direction: column;
   align-items: center;
