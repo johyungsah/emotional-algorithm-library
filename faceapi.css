@@ -5,7 +5,7 @@
 html, body {
   margin: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100svh;
   background-color: #000;
   font-family: 'Pretendard', sans-serif;
   overflow: hidden;
@@ -48,7 +48,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: 2.1rem;
   font-weight: 500;
   color: white;
   background-color: #222;
@@ -104,11 +104,11 @@ canvas {
 
 @media (max-width: 768px) {
   .prompt-text {
-    font-size: 1rem;
+    font-size: 2.1rem;
   }
 
   #emotion-banner {
-    font-size: 0.8rem;
+    font-size: 1.9rem;
     height: 5vh;
   }
 
