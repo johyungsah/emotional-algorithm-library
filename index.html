@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <link rel="stylesheet" href="index.css" />
 </head>
 <body onclick="window.location.href='login.html'">
@@ -38,6 +38,28 @@
       object-fit: cover;
       pointer-events: none; /* 클릭 방지 */
     }
-  </style>
+
+    /* CSS 에서 */
+.container {
+  /* --vh 가 브라우저 UI 제외한 1vh 만큼(px) */
+  height: calc(var(--vh) * 100);
+  overflow: hidden;    /* 스크롤 방지 */
+  box-sizing: border-box;
+}
+</style>
+
+<script>
+  // 1) 초기 설정
+  const setVhUnit = () => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  };
+
+  // 2) 로드 및 리사이즈 때마다 갱신
+  window.addEventListener('load',  setVhUnit);
+  window.addEventListener('resize', setVhUnit);
+</script>
+
+
 </body>
 </html>
