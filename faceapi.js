@@ -174,12 +174,12 @@ async function init() {
         ctx.lineWidth = 2;
         ctx.strokeRect(mirroredBoxX, box.y, box.width, box.height);
 
-        ctx.font = "1.8rem 'Pretendard', sans-serif";
+        ctx.font = "600 1.8rem 'Pretendard', sans-serif";
         ctx.textAlign = "left";
         ctx.textBaseline = "top";
-        const padding = 12;
+        const padding = 9;
         const textX = mirroredBoxX + 4;
-        const textY = box.y - 60;
+        const textY = box.y - 50;
         const textWidth = ctx.measureText(label).width;
         const textHeight = 50;
 
