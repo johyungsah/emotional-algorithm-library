@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Face Detection Fun Test - 4K</title>
+
+  <!-- External Scripts -->
+  <script defer src="https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js@master/dist/face-api.min.js"></script>
+  <script defer src="faceapi.js"></script>
+
+  <!-- Fonts & Styles -->
+  <link rel="stylesheet" href="faceapi.css" />
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet" />
+</head>
+<body>
+  <div class="container">
+    <img id="emotion-graphic" />
+    <div class="prompt-wrapper">
+      <div class="prompt-text">문장 불러오는 중...</div>
+    </div>
+    <div id="emotion-banner">HOW ALGORITM U FEELING TODAY?</div>
+    <div id="canvasContainer"></div>
+    <a id="emotion-link" href="#" target="_blank" class="emotion-button">
+      <img id="capture-image" alt="감정별 캡처 버튼" />
+    </a>
+    <p id="capture-text">아이콘을 눌러 캡쳐해주세요!</p>
+    <p id="capture-guide">(화면은 녹화되지 않습니다)</p>
+    <div id="status-div"></div>
+  </div>
+</body>
+</html>
