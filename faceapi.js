@@ -179,7 +179,7 @@ async function init() {
         ctx.textBaseline = "top";
         const padding = 7;
         const textX = mirroredBoxX + 4;
-        const textY = box.y - 10;
+        const textY = box.y 30;
         const textWidth = ctx.measureText(label).width;
         const textHeight = 0;
 
