@@ -171,10 +171,10 @@ async function init() {
 
         const mirroredBoxX = canvas.width - box.x - box.width;
         ctx.strokeStyle = window._boxColor;
-        ctx.lineWidth = 8;
+        ctx.lineWidth = 4;
         ctx.strokeRect(mirroredBoxX, box.y, box.width, box.height);
 
-        ctx.font = "40px 'Pretendard', sans-serif";
+        ctx.font = "20px 'Pretendard', sans-serif";
         ctx.textAlign = "left";
         ctx.textBaseline = "top";
         const padding = 12;
