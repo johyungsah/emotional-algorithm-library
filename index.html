@@ -20,8 +20,18 @@
       height: 100%;
       background: black;
       font-family: 'Pretendard', sans-serif;
+      overflow: hidden;
     }
 
+#wrapper {
+  height: 100%;           /* html/body 전체 높이 차지 */
+  box-sizing: border-box;
+  /* 필요하다면 flex/grid 레이아웃으로 내부 정렬 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+    
     .fullscreen {
       position: relative;
       width: 100vw;
