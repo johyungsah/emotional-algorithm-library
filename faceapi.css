@@ -48,7 +48,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.1rem;
+  font-size: 5rem;
   font-weight: 500;
   color: white;
   background-color: #222;
@@ -108,7 +108,7 @@ canvas {
   }
 
   #emotion-banner {
-    font-size: 1.9rem;
+    font-size: 5rem;
     height: 5vh;
   }
 
