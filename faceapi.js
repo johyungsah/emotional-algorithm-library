@@ -171,13 +171,13 @@ async function init() {
 
         const mirroredBoxX = canvas.width - box.x - box.width;
         ctx.strokeStyle = window._boxColor;
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 3;
         ctx.strokeRect(mirroredBoxX, box.y, box.width, box.height);
 
-        ctx.font = "600 1.8rem 'Pretendard', sans-serif";
+        ctx.font = "600 1rem 'Pretendard', sans-serif";
         ctx.textAlign = "left";
         ctx.textBaseline = "top";
-        const padding = 9;
+        const padding = 5;
         const textX = mirroredBoxX + 4;
         const textY = box.y - 50;
         const textWidth = ctx.measureText(label).width;
