@@ -269,6 +269,7 @@ html, body {
   align-items: center;
   gap: 1vh;
   z-index: 3;
+  overflow: hidden;
 }
 
 .info-row {
@@ -328,7 +329,7 @@ html, body {
 }
 
 .home-button {
-  position: relative;
+  position: fixed;
   top: 5.2vh;
   right: 22vw;
   padding: 0.7vh 3vw;
