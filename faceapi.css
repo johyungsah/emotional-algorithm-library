@@ -48,7 +48,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 2.6vw;
   font-weight: 500;
   color: white;
   background-color: #222;
@@ -104,11 +104,11 @@ canvas {
 
 @media (max-width: 768px) {
   .prompt-text {
-    font-size: 1.5rem;
+    font-size: 2.6vw;
   }
 
   #emotion-banner {
-    font-size: 2vh;
+    font-size: 2.6vw;
     height: 5vh;
   }
 
