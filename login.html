@@ -36,7 +36,7 @@
     
     .formLabel {
       position: absolute; top: -5px; left: 50%;
-      color: #bbb; transition: all 0.3s ease;
+      color: white; transition: all 0.3s ease;
       text-align: center; font-size: 1.2rem;
       transform: translateX(-50%);}
 
@@ -49,6 +49,14 @@
       text-align: center;
       z-index: 20;
     }
+
+    .form-style.filled {
+  background-color: #fff;
+  color: #000;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
     .form-style:focus {
       border: 2px solid white; outline: none; color: black; 
       background-color: white; transition: all 0.3s ease;
@@ -101,12 +109,28 @@
       const formInputs = $('input[type="text"]');
       formInputs.focus(function() {
         $(this).siblings('.formLabel').addClass('formTop');
-      });
-      formInputs.blur(function() {
-        if ($.trim($(this).val()) === '') {
-          $(this).siblings('.formLabel').removeClass('formTop');
-        }
-      });
+        $(this).addClass('filled');
+        });
+
+        // 입력 중—한 글자라도 들어오면 filled, 없으면 해제
+      formInputs.on('input', function() {
+         if ($.trim($(this).val()) !== '') {
+         $(this).addClass('filled');
+          } else {
+             $(this).removeClass('filled');
+         }
+        });
+      
+      // 블러 시—값이 비어 있으면 라벨·filled 해제, 
+      // 한 글자라도 있으면 filled 유지 (라벨은 formTop 유지)
+      formInputs.on('blur', function() {
+      if ($.trim($(this).val()) === '') {
+      $(this).siblings('.formLabel').removeClass('formTop');
+      $(this).removeClass('filled');
+    }
+    // else { /* 아무것도 안 해도 filled 클래스는 남아있습니다 */ }
+  });
+
       $('.formLabel').click(function() {
         $(this).siblings('.form-style').focus();
       });
