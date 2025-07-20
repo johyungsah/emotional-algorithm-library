@@ -179,9 +179,9 @@ async function init() {
         ctx.textBaseline = "top";
         const padding = 7;
         const textX = mirroredBoxX + 4;
-        const textY = box.y - 50;
+        const textY = box.y - 100;
         const textWidth = ctx.measureText(label).width;
-        const textHeight = 35;
+        const textHeight = 50;
 
         ctx.fillStyle = window._boxColor;
         ctx.fillRect(textX - padding, textY - padding, textWidth + padding * 2, textHeight + padding * 1.2);
