@@ -37,7 +37,7 @@ html, body {
 }
 
 .prompt-text {
-  font-size: 3vh;
+  font-size: 3.5vw;
   font-weight: 600;
   color: #ffffff;
 }
@@ -48,7 +48,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.6vw;
+  font-size: 3.3vw;
   font-weight: 500;
   color: white;
   background-color: #222;
@@ -89,7 +89,7 @@ canvas {
 
 #capture-text {
   color: white;
-  font-size: 2.2vh;
+  font-size: 3.2vh;
   margin-top: 2vh;
   margin-bottom: 1vh;
   text-align: center;
@@ -104,11 +104,11 @@ canvas {
 
 @media (max-width: 768px) {
   .prompt-text {
-    font-size: 2.6vw;
+    font-size: 3.5vw;
   }
 
   #emotion-banner {
-    font-size: 2.6vw;
+    font-size: 3.3vw;
     height: 5vh;
   }
 
