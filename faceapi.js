@@ -84,6 +84,7 @@ async function getPreferredCameraStream() {
   return navigator.mediaDevices.getUserMedia(constraints);
 }
 
+
 async function init() {
   await faceapi.nets.tinyFaceDetector.loadFromUri("https://justadudewhohacks.github.io/face-api.js/models");
   await faceapi.nets.faceLandmark68TinyNet.loadFromUri("https://justadudewhohacks.github.io/face-api.js/models");
@@ -94,6 +95,16 @@ async function init() {
   video.muted = true;
   video.setAttribute("playsinline", "");  // iOS/Safari 필수
   document.body.appendChild(video);
+
+  // init() 안에서…
+  video.style.display = 'none';            // ① 비디오 요소 숨기기
+  const canvas = faceapi.createCanvasFromMedia(video);
+  canvas.style.width  = '100%';             // ② CSS로 컨테이너 폭에 맞춰 비율 자동 조정
+  canvas.style.height = 'auto';
+  canvas.style.transform = 'scaleX(-1)';    // ③ CSS 미러 모드(캔버스 전체를 좌우반전)
+  container.innerHTML = '';
+  container.appendChild(canvas);
+
 
   try {
     const stream = await getPreferredCameraStream();
@@ -121,7 +132,7 @@ async function init() {
     canvas.height = h;
 
     const displaySize = { width: w, height: h };
-    faceapi.matchDimensions(canvas, displaySize);
+    faceapi.matchDimensions(canvas, { width: w, height: h });
 
     setInterval(async () => {
       const options = new faceapi.TinyFaceDetectorOptions({ inputSize: 128, scoreThreshold: 0.3 });
@@ -153,7 +164,7 @@ async function init() {
         const sorted = Object.entries(expressions).sort((a, b) => b[1] - a[1]);
         const topEmotion = sorted[0][0];
         const emotionName = emotionLabels[topEmotion];
-        const label = `${emotionName || topEmotion} (${(sorted[0][1] * 100).toFixed(1)}%)`;
+        const label = `${emotionName} (${(expressions[topEmotion]*100).toFixed(1)}%)`;
 
         const mirroredBoxX = canvas.width - box.x - box.width;
         ctx.strokeStyle = window._boxColor;
@@ -173,6 +184,8 @@ async function init() {
 
         ctx.fillStyle = window._boxColor;
         ctx.fillRect(x - padding, y, textWidth + padding * 2, textHeight + padding * 2);
+        if (y < 0) y = box.y + box.height + padding;
+        
         ctx.fillStyle = "#000000";
         ctx.fillText(label, textX, textY);
 
