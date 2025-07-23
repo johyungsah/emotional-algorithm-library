@@ -76,7 +76,7 @@ async function getPreferredCameraStream() {
   const constraints = {
     video: {
       facingMode: "user",
-      width: { ideal: 640 },
+      width: { ideal: 550 },
       height: { ideal: 480 }
     },
     audio: false
@@ -165,7 +165,7 @@ async function init() {
         ctx.textBaseline = "top";
         const padding = 7;
         const textX = mirroredBoxX + 4;
-        const textY = box.y - 30;
+        const textY = box.y - 5;
         const textWidth = ctx.measureText(label).width;
         const textHeight = 0;
 
