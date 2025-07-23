@@ -115,12 +115,12 @@ async function init() {
     container.innerHTML = "";
     container.appendChild(canvas);
 
-    const width = container.clientWidth;
-    const height = width * 3 / 4;
-    canvas.width = width;
-    canvas.height = height;
+    const w = container.clientWidth;
+    const h = w * (video.videoHeight / video.videoWidth);   // 스트림의 종횡비에 맞춰 계산
+    canvas.width = w;
+    canvas.height = h;
 
-    const displaySize = { width, height };
+    const displaySize = { width: w, height: h };
     faceapi.matchDimensions(canvas, displaySize);
 
     setInterval(async () => {
@@ -166,11 +166,13 @@ async function init() {
         const padding = 7;
         const textX = mirroredBoxX + 4;
         const textY = box.y - 5;
-        const textWidth = ctx.measureText(label).width;
-        const textHeight = 0;
+        const metrics    = ctx.measureText(label);
+        const textWidth  = metrics.width;
+        const textHeight = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
+
 
         ctx.fillStyle = window._boxColor;
-        ctx.fillRect(textX - padding, textY - padding, textWidth + padding * 2, textHeight + padding * 1.2);
+        ctx.fillRect(x - padding, y, textWidth + padding * 2, textHeight + padding * 2);
         ctx.fillStyle = "#000000";
         ctx.fillText(label, textX, textY);
 
