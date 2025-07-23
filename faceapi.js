@@ -72,20 +72,16 @@ function lerpColor(from, to, alpha = 0.2) {
 }
 
 async function getPreferredCameraStream() {
-  const devices = await navigator.mediaDevices.enumerateDevices();
-  const videoDevices = devices.filter((device) => device.kind === 'videoinput');
-  let preferredDevice = videoDevices.find((device) =>
-    device.label.toLowerCase().includes("elgato facecam")
-  );
-
+  // 모바일 페이스캠 감지 대신, 보편적인 user(셀카) 모드 우선
   const constraints = {
-    video: preferredDevice
-      ? { deviceId: { exact: preferredDevice.deviceId }, width: 960, height: 1280 }
-      : { width: 960, height: 1280 },
+    video: {
+      facingMode: "user",
+      width: { ideal: 640 },
+      height: { ideal: 480 }
+    },
     audio: false
   };
-
-  return await navigator.mediaDevices.getUserMedia(constraints);
+  return navigator.mediaDevices.getUserMedia(constraints);
 }
 
 async function init() {
@@ -96,7 +92,8 @@ async function init() {
   const video = document.createElement("video");
   video.autoplay = true;
   video.muted = true;
-  video.playsInline = true;
+  video.setAttribute("playsinline", "");  // iOS/Safari 필수
+  document.body.appendChild(video);
 
   try {
     const stream = await getPreferredCameraStream();
@@ -168,7 +165,7 @@ async function init() {
         ctx.textBaseline = "top";
         const padding = 7;
         const textX = mirroredBoxX + 4;
-        const textY = box.y 30;
+        const textY = box.y - 30;
         const textWidth = ctx.measureText(label).width;
         const textHeight = 0;
 
@@ -188,6 +185,6 @@ async function init() {
           linkEl.classList.remove("active");
         }
       }
-    }, 100);
+    }, 300);
   };
 }
