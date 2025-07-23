@@ -117,7 +117,9 @@ async function init() {
     const container = document.getElementById("canvasContainer");
     const bannerEl = document.getElementById("emotion-banner");
     const linkEl = document.getElementById("emotion-link");
-
+    const graphicEl = document.getElementById("emotion-graphic");
+    const captureImageEl = document.getElementById("capture-image");
+    
     container.innerHTML = "";
     container.appendChild(canvas);
 
@@ -132,10 +134,6 @@ async function init() {
     faceapi.matchDimensions(canvas, displaySize);
 
     setInterval(async () => {
-      if (stop) return;
-      stop = true;
-
-
       const options = new faceapi.TinyFaceDetectorOptions({ inputSize: 128, scoreThreshold: 0.3 });
       const result = await faceapi.detectSingleFace(video, options)
         .withFaceLandmarks(true)
