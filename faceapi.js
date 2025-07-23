@@ -80,8 +80,8 @@ async function getPreferredCameraStream() {
 
   const constraints = {
     video: preferredDevice
-      ? { deviceId: { exact: preferredDevice.deviceId }, width: 1280, height: 960 }
-      : { width: 1280, height: 960 },
+      ? { deviceId: { exact: preferredDevice.deviceId }, width: 960, height: 1280 }
+      : { width: 960, height: 1280 },
     audio: false
   };
 
@@ -160,17 +160,17 @@ async function init() {
 
         const mirroredBoxX = canvas.width - box.x - box.width;
         ctx.strokeStyle = window._boxColor;
-        ctx.lineWidth = 8;
+        ctx.lineWidth = 3;
         ctx.strokeRect(mirroredBoxX, box.y, box.width, box.height);
 
-        ctx.font = "40px 'Pretendard', sans-serif";
+        ctx.font = "600 1rem 'Pretendard', sans-serif";
         ctx.textAlign = "left";
         ctx.textBaseline = "top";
-        const padding = 12;
+        const padding = 7;
         const textX = mirroredBoxX + 4;
-        const textY = box.y - 60;
+        const textY = box.y 30;
         const textWidth = ctx.measureText(label).width;
-        const textHeight = 50;
+        const textHeight = 0;
 
         ctx.fillStyle = window._boxColor;
         ctx.fillRect(textX - padding, textY - padding, textWidth + padding * 2, textHeight + padding * 1.2);
