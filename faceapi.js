@@ -1,15 +1,14 @@
-// 색상 및 리소스 정의
 const emotionColors = {
   neutral: "#AAAEAA", happy: "#FFE048", sad: "#A7C9FF",
   disgusted: "#D0FF3E", surprised: "#FF865C", angry: "#FF6489", fearful: "#CE6EB5"
 };
 
 const emotionLinks = {
-      happy: "tri.joy.html", sad: "tri.sadness.html",
-      angry: "tri.anger.html", fearful: "tri.fear.html",
-      disgusted: "tri.disgust.html", surprised: "tri.surprise.html",
-      neutral: "tri.neutral.html"
-    };
+  happy: "tri.joy.html", sad: "tri.sadness.html",
+  angry: "tri.anger.html", fearful: "tri.fear.html",
+  disgusted: "tri.disgust.html", surprised: "tri.surprise.html",
+  neutral: "tri.neutral.html"
+};
 
 const emotionImages = {
           Neutral: "https://cdn.glitch.global/b5dd1b0e-2595-4522-b3c9-fac2d8d11eb4/IMOJI-100.png?v=1751373938451/IMOJI-100.png",
@@ -20,8 +19,6 @@ const emotionImages = {
           Disgust: "https://cdn.glitch.global/b5dd1b0e-2595-4522-b3c9-fac2d8d11eb4/IMOJI-600.png?v=1751373966696/IMOJI-600.png",
           Surprise: "https://cdn.glitch.global/b5dd1b0e-2595-4522-b3c9-fac2d8d11eb4/IMOJI-700.png?v=1751373970745/IMOJI-700.png"
         };
-
-
 const prompts = [
   "지금 어떤 감정이 드시나요?", "당신을 가장 쉽게 웃게 만드는 건 무엇인가요?",
   "기억에 남는 슬펐던 경험은 어떤 게 있나요?", "최근 어떤 일에 화가 났나요?",
@@ -33,6 +30,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const promptEl = document.querySelector(".prompt-text");
   const randomIndex = Math.floor(Math.random() * prompts.length);
   promptEl.innerText = prompts[randomIndex];
+  init();
 });
 
 function hexToRgb(hex) {
@@ -90,43 +88,38 @@ async function getPreferredCameraStream() {
   return await navigator.mediaDevices.getUserMedia(constraints);
 }
 
-let video = document.createElement("video");
-let stream = null, stop = false;
-
 async function init() {
   await faceapi.nets.tinyFaceDetector.loadFromUri("https://justadudewhohacks.github.io/face-api.js/models");
   await faceapi.nets.faceLandmark68TinyNet.loadFromUri("https://justadudewhohacks.github.io/face-api.js/models");
   await faceapi.nets.faceExpressionNet.loadFromUri("https://justadudewhohacks.github.io/face-api.js/models");
 
+  const video = document.createElement("video");
+  video.autoplay = true;
+  video.muted = true;
+  video.playsInline = true;
+
   try {
-    stream = await getPreferredCameraStream();
+    const stream = await getPreferredCameraStream();
+    video.srcObject = stream;
   } catch (e) {
     alert("카메라에 접근할 수 없습니다: " + e.message);
     return;
   }
 
-  video.srcObject = stream;
-  video.muted = true;
-  video.autoplay = true;
-  video.playsInline = true;
-
   video.onloadedmetadata = () => {
     video.play();
-
     const canvas = faceapi.createCanvasFromMedia(video);
     const container = document.getElementById("canvasContainer");
     const bannerEl = document.getElementById("emotion-banner");
     const linkEl = document.getElementById("emotion-link");
     const graphicEl = document.getElementById("emotion-graphic");
     const captureImageEl = document.getElementById("capture-image");
-    
+
     container.innerHTML = "";
     container.appendChild(canvas);
 
-    // ✅ 동적 해상도 설정
     const width = container.clientWidth;
     const height = width * 3 / 4;
-
     canvas.width = width;
     canvas.height = height;
 
@@ -154,14 +147,12 @@ async function init() {
         const expressions = result.expressions;
         const targetColor = blendEmotionColor(expressions);
         window._boxColor = window._boxColor ? lerpColor(window._boxColor, targetColor, 0.4) : targetColor;
-
         if (bannerEl) bannerEl.style.backgroundColor = window._boxColor;
 
         const emotionLabels = {
           neutral: "Neutral", happy: "Joy", sad: "Sadness", angry: "Anger",
           fearful: "Fear", disgusted: "Disgust", surprised: "Surprise"
         };
-
         const sorted = Object.entries(expressions).sort((a, b) => b[1] - a[1]);
         const topEmotion = sorted[0][0];
         const emotionName = emotionLabels[topEmotion];
@@ -180,16 +171,13 @@ async function init() {
         const textY = box.y 30;
         const textWidth = ctx.measureText(label).width;
         const textHeight = 0;
-
+        
         ctx.fillStyle = window._boxColor;
         ctx.fillRect(textX - padding, textY - padding, textWidth + padding * 2, textHeight + padding * 1.2);
         ctx.fillStyle = "#000000";
         ctx.fillText(label, textX, textY);
 
-        const graphicEl = document.getElementById("emotion-graphic");
         if (emotionImages[emotionName]) graphicEl.src = emotionImages[emotionName];
-
-        const captureImageEl = document.getElementById("capture-image");
         captureImageEl.src = "https://cdn.glitch.global/f52c6b01-3ecd-4d0c-9574-b68cf7003384/CAPTURE%20.png?v=1751635645071/CAPTURE.png";
 
         if (emotionLinks[topEmotion]) {
@@ -200,9 +188,6 @@ async function init() {
           linkEl.classList.remove("active");
         }
       }
-      stop = false;
     }, 100);
   };
 }
-
-init();
