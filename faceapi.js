@@ -90,11 +90,13 @@ async function init() {
   await faceapi.nets.faceLandmark68TinyNet.loadFromUri("https://justadudewhohacks.github.io/face-api.js/models");
   await faceapi.nets.faceExpressionNet.loadFromUri("https://justadudewhohacks.github.io/face-api.js/models");
 
+  const container = document.getElementById("canvasContainer");
   const video = document.createElement("video");
   video.autoplay = true;
   video.muted = true;
-  video.setAttribute("playsinline", "");  // iOS/Safari 필수
-  document.body.appendChild(video);
+  video.playsInline = true;       // 모바일 iOS 필수
+  video.style.display = "none";   // 실제 DOM엔 숨기고
+  container.appendChild(video);
 
   // init() 안에서…
   video.style.display = 'none';            // ① 비디오 요소 숨기기
@@ -123,6 +125,7 @@ async function init() {
     const graphicEl = document.getElementById("emotion-graphic");
     const captureImageEl = document.getElementById("capture-image");
 
+    
     container.innerHTML = "";
     container.appendChild(canvas);
 
@@ -136,26 +139,35 @@ async function init() {
 
     setInterval(async () => {
       const options = new faceapi.TinyFaceDetectorOptions({ inputSize: 128, scoreThreshold: 0.3 });
-      const result = await faceapi.detectSingleFace(video, options)
+      const result = await faceapi
+        .detectSingleFace(video, new faceapi.TinyFaceDetectorOptions({ inputSize: 128, scoreThreshold: 0.3 }))
         .withFaceLandmarks(true)
         .withFaceExpressions();
 
       const ctx = canvas.getContext("2d");
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, w, h);
 
       ctx.save();
       ctx.translate(canvas.width, 0);
       ctx.scale(-1, 1);
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      ctx.drawImage(video, 0, 0, w, h);
       ctx.restore();
 
-      if (result) {
+      if (!result) return;
+      
         const resized = faceapi.resizeResults(result, displaySize);
         const box = resized.detection.box;
         const expressions = result.expressions;
         const targetColor = blendEmotionColor(expressions);
         window._boxColor = window._boxColor ? lerpColor(window._boxColor, targetColor, 0.4) : targetColor;
         if (bannerEl) bannerEl.style.backgroundColor = window._boxColor;
+
+        // 7-1) 경계 박스
+      const mx = w - box.x - box.width;
+      ctx.strokeStyle = color;
+      ctx.lineWidth   = 2;
+      ctx.strokeRect(mx, box.y, box.width, box.height);
+
 
         const emotionLabels = {
           neutral: "Neutral", happy: "Joy", sad: "Sadness", angry: "Anger",
